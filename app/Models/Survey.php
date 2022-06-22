@@ -12,17 +12,15 @@ class Survey extends Model
 {
     use HasFactory, HasSlug;
     // Table name
-    protected $table = 'survey';
+    //protected $table = 'survey';
     // Primary Key
-    public $primaryKey = 'id';
+    //public $primaryKey = 'id';
     // Timestamps
 
     protected $fillable = ['user_id', 'title', 'slug', 'status', 'description', 'expire_date'];
 
     public function getSlugOptions(): SlugOptions
     {
-        return SlugOptions::create()
-        ->generateSlugsFrom('title')
-        ->saveSlugsto('slug');  
+        return SlugOptions::create()->generateSlugsFrom('title')->saveSlugsTo('slug');
     }
 }
