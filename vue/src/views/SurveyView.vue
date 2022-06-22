@@ -190,10 +190,13 @@
 import { v4 as uuidv4 } from "uuid";
 import store from "../store";
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 import PageComponent from "../components/PageComponent.vue";
 import QuestionEditor from "../components/editor/QuestionEditor.vue";
+//import router from "../router";
+
+const router = useRouter();
 
 const route = useRoute();
 
@@ -236,6 +239,26 @@ function questionChange(question) {
     }
     return q;
   });
+}
+
+/**
+ * Create or update survey
+ */
+function saveSurvey() {
+  //let data = "chima";
+  console.log(model.value);
+
+  store
+    .dispatch("saveSurvey", model.value)
+    .then(({ data }) => {
+      router.push({
+        name: "SurveyView",
+        params: { id: data.data.id },
+      });
+    })
+    .catch((error) => {
+      console.log(error.response);
+    });
 }
 </script>
 
