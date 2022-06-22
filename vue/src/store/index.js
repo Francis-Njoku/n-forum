@@ -1,4 +1,4 @@
-import axios from "axios";
+//import axios from "axios";
 import { createStore } from "vuex";
 import axiosClient from "../axios";
 
@@ -132,7 +132,7 @@ const tmpSurveys = [{
         title: "Laravel 8",
         slug: "laravel-8",
         status: "draft",
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/1200px-Laravel.svg.png',
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/1200px-Laravel.svg.png",
         description: `Laravel is a web application framework with expressive, elegant syntax. We’ve already laid the foundation — freeing you to create without sweating the small things.`,
         created_at: "2021-12-20 18:00:00",
         updated_at: "2021-12-20 18:00:00",
@@ -144,7 +144,7 @@ const tmpSurveys = [{
         title: "Vue 3",
         slug: "vue-3",
         status: "active",
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1184px-Vue.js_Logo_2.svg.png',
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/1184px-Vue.js_Logo_2.svg.png",
         description: `Vue (pronounced /vjuː/, like view) is a progressive framework for building user interfaces. Unlike other monolithic frameworks, Vue is designed from the ground up to be incrementally adoptable.`,
         created_at: "2021-12-21 17:00:00",
         updated_at: "2021-12-21 17:00:00",
@@ -156,7 +156,7 @@ const tmpSurveys = [{
         title: "Tailwind 3",
         slug: "tailwind-3",
         status: "active",
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2048px-Tailwind_CSS_Logo.svg.png',
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2048px-Tailwind_CSS_Logo.svg.png",
         description: `A utility-first CSS framework packed with classes like <code>flex</code>, <code>pt-4</code>, <code>text-center</code> and <code>rotate-90</code> that can be composed to build any design, directly in your markup.`,
         created_at: "2021-12-21 14:00:00",
         updated_at: "2021-12-21 14:00:00",
@@ -176,6 +176,21 @@ const store = createStore({
     },
     getters: {},
     actions: {
+        saveSurvey({ commit }, survey) {
+            let response;
+            if (survey.id) {
+                response = axiosClient.put(`/survey/${survey.id}`, survey).then((res) => {
+                    commit("updateSurvey", res.data);
+                    return res;
+                });
+            } else {
+                response = axiosClient.post("/survey", survey).then((res) => {
+                    commit("saveSurvey", res.data);
+                    return res;
+                });
+            }
+            return response;
+        },
         register({ commit }, user) {
             return axiosClient.post("/register", user).then(({ data }) => {
                 commit("setUser", data);
@@ -196,6 +211,17 @@ const store = createStore({
         },
     },
     mutations: {
+        saveSurvey: (state, survey) => {
+            state.surveys = [...state.surveys, survey.data];
+        },
+        updateSurvey: (state, survey) => {
+            state.surveys = state.surveys.map((s) => {
+                if (s.id == survey.data.id) {
+                    return survey.data;
+                }
+                return s;
+            });
+        },
         logout: (state) => {
             state.user.data = {};
             state.user.token = null;
