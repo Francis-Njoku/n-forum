@@ -8,7 +8,9 @@ use App\Http\Requests\StoreSurveyRequest;
 use App\Http\Requests\UpdateSurveyRequest;
 use App\Http\Resources\SurveyResource;
 
-class SurveryController extends Controller
+
+
+class SurveyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +36,7 @@ class SurveryController extends Controller
         return new SurveyResource($result);
     } 
 
-    /** 
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Survey  $survey
