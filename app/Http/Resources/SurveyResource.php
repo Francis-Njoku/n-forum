@@ -18,11 +18,11 @@ class SurveyResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
-            'status' => $this->status !== 'draft',
+            'status' => !!$this->status,
             'description' => $this->description,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'expire_date' => $this->expire_date,
+            'created_at' => (new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
+            'updated_at' => (new \DateTime($this->updated_at))->format('Y-m-d H:i:s'),
+            'expire_date' => (new \DateTime($this->expire_date))->format('Y-m-d'),
             'questions' => []
         ];
     }
