@@ -175,7 +175,11 @@ const store = createStore({
             loading: false,
             data: {},
         },
-        surveys: [...tmpSurveys],
+        //surveys: [...tmpSurveys],
+        surveys: {
+            loading: false,
+            data: [],
+        },
         questionTypes: ["text", "select", "radio", "checkbox", "textarea"],
     },
     getters: {},
@@ -212,6 +216,17 @@ const store = createStore({
             }
             return response;
         },
+        deleteSurvey({}, id) {
+            return axiosClient.delete(`/survey/${id}`);
+        },
+        getSurveys({ commit }) {
+            commit("setSurveysLoading", true);
+            return axiosClient.get("/survey").then((res) => {
+                commit("setSurveysLoading", false);
+                commit("setSurveys", res.data);
+                return res;
+            });
+        },
         register({ commit }, user) {
             return axiosClient.post("/register", user).then(({ data }) => {
                 commit("setUser", data);
@@ -235,21 +250,27 @@ const store = createStore({
         setCurrentSurveyLoading: (state, loading) => {
             state.currentSurvey.loading = loading;
         },
+        setSurveysLoading: (state, loading) => {
+            state.surveys.loading = loading;
+        },
         setCurrentSurvey: (state, survey) => {
             state.currentSurvey.data = survey.data;
         },
+        setSurveys: (state, surveys) => {
+            state.surveys.data = surveys.data;
+        },
         // these is for saving but it does  not render the image after saving/updating
         /*saveSurvey: (state, survey) => {
-            state.surveys = [...state.surveys, survey.data];
-        },
-        updateSurvey: (state, survey) => {
-            state.surveys = state.surveys.map((s) => {
-                if (s.id == survey.data.id) {
-                    return survey.data;
-                }
-                return s;
-            });
-        },*/
+                    state.surveys = [...state.surveys, survey.data];
+                },
+                updateSurvey: (state, survey) => {
+                    state.surveys = state.surveys.map((s) => {
+                        if (s.id == survey.data.id) {
+                            return survey.data;
+                        }
+                        return s;
+                    });
+                },*/
         logout: (state) => {
             state.user.data = {};
             state.user.token = null;
