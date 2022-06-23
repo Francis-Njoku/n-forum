@@ -14,7 +14,7 @@ class AddImageColumnToSurveysTable extends Migration
     public function up()
     {
         Schema::table('surveys', function (Blueprint $table) {
-            //
+            $table->string('image', 255)->nullable()->after('user_id');
         });
     }
 
@@ -26,7 +26,7 @@ class AddImageColumnToSurveysTable extends Migration
     public function down()
     {
         Schema::table('surveys', function (Blueprint $table) {
-            //
+            $table->dropColumn('image');
         });
     }
 }
