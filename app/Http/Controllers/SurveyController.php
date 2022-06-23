@@ -44,7 +44,7 @@ class SurveyController extends Controller
         $survey = Survey::create($data);
 
         return new SurveyResource($survey);
-    } 
+    }
 
     /**
      * Display the specified resource.
@@ -55,7 +55,7 @@ class SurveyController extends Controller
     public function show(Survey $survey, Request $request)
     {
         $user = $request->user();
-        if($user->id !== $survey->user_id){
+        if ($user->id !== $survey->user_id) {
             return abort(403, 'Unauthorized action.');
         }
         return new SurveyResource($survey);
@@ -70,22 +70,22 @@ class SurveyController extends Controller
      */
     public function update(UpdateSurveyRequest $request, Survey $survey)
     {
-       // $survey->update($request->validated());
-       $data = $request->validated();
+        // $survey->update($request->validated());
+        $data = $request->validated();
 
-       if (isset($data['image'])) {
-        $relativePath = $this->saveImage($data['image']);
-        $data['image'] = $relativePath;
-       }
+        if (isset($data['image'])) {
+            $relativePath = $this->saveImage($data['image']);
+            $data['image'] = $relativePath;
+        }
 
-       // If there is an old image, delete it
-       if($survey->image) {
-        $absolutePath = public_path($survey->image);
-        FIle::delete($absolutePath);
-       }
+        // If there is an old image, delete it
+        if ($survey->image) {
+            $absolutePath = public_path($survey->image);
+            FIle::delete($absolutePath);
+        }
 
-       // update survey in the database
-       $survey->update($data);
+        // update survey in the database
+        $survey->update($data);
         return new SurveyResource($survey);
     }
 
@@ -102,6 +102,13 @@ class SurveyController extends Controller
             return abort(403, 'Unauthorized action.');
         }
         $survey->delete();
+
+        // if there is an old image, delete it
+
+        if ($survey->image) {
+            $absolutePath = public_path($survey->image);
+            File::delete($absolutePath);
+        }
         return response('', 204);
     }
 
@@ -125,10 +132,8 @@ class SurveyController extends Controller
             if ($image === false) {
                 throw new \Exception('base64_decode failed');
             }
-
         } else {
             throw new \Exception('did nit match data URI with image data');
-
         }
 
         $dir = 'images/';
@@ -137,7 +142,6 @@ class SurveyController extends Controller
         $relativePath = $dir . $file;
         if (!File::exists($absolutePath)) {
             File::makeDirectory($absolutePath, 0755, true);
-
         }
         file_put_contents($relativePath, $image);
 
