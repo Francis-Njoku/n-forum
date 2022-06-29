@@ -63,13 +63,27 @@ const store = createStore({
             return axiosClient.delete(`/survey/${id}`);
         },
         getSurveys({ commit }, { url = null } = {}) {
-            url = url || '/survey'
+            url = url || "/survey";
             commit("setSurveysLoading", true);
             return axiosClient.get(url).then((res) => {
                 commit("setSurveysLoading", false);
                 commit("setSurveys", res.data);
                 return res;
             });
+        },
+        getSurveyBySlug({ commit }, slug) {
+            commit("setCurrentSurveyLoading", true);
+            return axiosClient
+                .get(`/survey-by-slug/${slug}`)
+                .then((res) => {
+                    commit("setCurrentSurvey", res.data);
+                    commit("setCurrentSurveyLoading", false);
+                    return res;
+                })
+                .catch((err) => {
+                    commit("setCurrentSurveyLoading", false);
+                    throw err;
+                });
         },
         register({ commit }, user) {
             return axiosClient.post("/register", user).then(({ data }) => {
@@ -106,16 +120,16 @@ const store = createStore({
         },
         // these is for saving but it does  not render the image after saving/updating
         /*saveSurvey: (state, survey) => {
-                            state.surveys = [...state.surveys, survey.data];
-                        },
-                        updateSurvey: (state, survey) => {
-                            state.surveys = state.surveys.map((s) => {
-                                if (s.id == survey.data.id) {
-                                    return survey.data;
-                                }
-                                return s;
-                            });
-                        },*/
+                                    state.surveys = [...state.surveys, survey.data];
+                                },
+                                updateSurvey: (state, survey) => {
+                                    state.surveys = state.surveys.map((s) => {
+                                        if (s.id == survey.data.id) {
+                                            return survey.data;
+                                        }
+                                        return s;
+                                    });
+                                },*/
         logout: (state) => {
             state.user.data = {};
             state.user.token = null;
@@ -132,8 +146,8 @@ const store = createStore({
             state.notification.message = message;
             setTimeout(() => {
                 state.notification.show = false;
-            }, 3000)
-        }
+            }, 3000);
+        },
     },
     modules: {},
 });
