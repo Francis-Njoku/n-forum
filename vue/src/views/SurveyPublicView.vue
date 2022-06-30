@@ -71,15 +71,15 @@ function submitSurvey() {
       answers: answers.value,
     })
     .then((response) => {
-      if (response.status === 201) {
+      if (response.status === 200 || response.status === 201) {
         surveyFinished.value = true;
       }
     });
 }
 
 function submitAnotherResponse() {
-    answers.value = {};
-    surveyFinished.value = false;
+  answers.value = {};
+  surveyFinished.value = false;
 }
 </script>
 
