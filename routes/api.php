@@ -27,11 +27,14 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('/items', [ItemController::class, 'index']);
-Route::prefix('/item')->group( function () {
+Route::prefix('/item')->group(function () {
     Route::post('/store', [ItemController::class, 'store']);
     Route::put('/{id}', [ItemController::class, 'update']);
     Route::delete('/{id}', [ItemController::class, 'delete']);
 });
+
+Route::get('/survey-by-slug/{survey:slug}', [SurveyController::class, 'showForGuest']);
+Route::post('/survey/{survey}/answer', [SurveyController::class, 'storeAnswer']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/sto', [ItemController::class, 'store2']);
