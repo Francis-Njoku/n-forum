@@ -85,6 +85,9 @@ const store = createStore({
                     throw err;
                 });
         },
+        saveSurveyAnswer({ commit }, { surveyId, answers }) {
+            return axiosClient.post(`/survey/${surveyId}/answer`, { answers });
+        },
         register({ commit }, user) {
             return axiosClient.post("/register", user).then(({ data }) => {
                 commit("setUser", data);
@@ -120,16 +123,16 @@ const store = createStore({
         },
         // these is for saving but it does  not render the image after saving/updating
         /*saveSurvey: (state, survey) => {
-                                    state.surveys = [...state.surveys, survey.data];
-                                },
-                                updateSurvey: (state, survey) => {
-                                    state.surveys = state.surveys.map((s) => {
-                                        if (s.id == survey.data.id) {
-                                            return survey.data;
-                                        }
-                                        return s;
-                                    });
-                                },*/
+                                        state.surveys = [...state.surveys, survey.data];
+                                    },
+                                    updateSurvey: (state, survey) => {
+                                        state.surveys = state.surveys.map((s) => {
+                                            if (s.id == survey.data.id) {
+                                                return survey.data;
+                                            }
+                                            return s;
+                                        });
+                                    },*/
         logout: (state) => {
             state.user.data = {};
             state.user.token = null;
