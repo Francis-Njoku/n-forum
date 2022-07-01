@@ -19,4 +19,9 @@ class SurveyAnswer extends Model
     const UPDATED_AT = null;
 
     protected $fillable = ['survey_id', 'start_date', 'end_date'];
+
+    public function survey()
+    {
+        return $this->belongsTo(Survey::class);
+    }
 }
