@@ -247,18 +247,28 @@
         <div class="pt-4 pb-3 border-t border-gray-700">
           <div class="flex items-center px-5">
             <div class="flex-shrink-0">
-              <img
-                class="h-10 w-10 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-              />
+              <svg
+                class="block h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
             </div>
             <div class="ml-3">
               <div class="text-base font-medium leading-none text-white">
-                Tom Cook
+                {{ user.name }}
               </div>
               <div class="text-sm font-medium leading-none text-gray-400">
-                tom@example.com
+                {{ user.email }}
               </div>
             </div>
             <button
@@ -311,7 +321,6 @@
     <router-view></router-view>
 
     <Notification />
-
   </div>
 </template>
 
@@ -334,24 +343,24 @@ const userNavigation = [
 ];
 
 export default {
-    name: "DefaultLayout",
-    setup() {
-        const store = useStore();
-        const router = useRouter();
-        function logout() {
-            store.dispatch("logout").then(() => {
-                router.push({
-                    name: "Login",
-                });
-            });
-        }
-        return {
-            user: computed(() => store.state.user.data),
-            navigation,
-            logout,
-        };
-    },
-    components: { Notification }
+  name: "DefaultLayout",
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+    function logout() {
+      store.dispatch("logout").then(() => {
+        router.push({
+          name: "Login",
+        });
+      });
+    }
+    return {
+      user: computed(() => store.state.user.data),
+      navigation,
+      logout,
+    };
+  },
+  components: { Notification },
 };
 </script>
 
