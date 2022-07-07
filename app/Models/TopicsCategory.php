@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class TopicsCategory extends Model
 {
     use HasFactory;
+
+    const CREATED_AT = null;
+    const UPDATED_AT = null;
+
+    protected $fillable = ['category_id', 'topic_id'];
+
+    
 }
