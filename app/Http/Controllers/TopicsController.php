@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Topics;
 use App\Http\Requests\StoreTopicsRequest;
 use App\Http\Requests\UpdateTopicsRequest;
+use App\Http\Resources\TopicsResource;
 
 class TopicsController extends Controller
 {
@@ -15,7 +16,7 @@ class TopicsController extends Controller
      */
     public function index()
     {
-        //
+        return TopicsResource::collection(Topics::join('users', 'users.id', '=', 'topics.user_id')->where('status', '1')->paginate(3));
     }
 
     /**
