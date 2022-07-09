@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SurveryController;
 use App\Http\Controllers\SurveyController;
+use App\Http\Controllers\TopicsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,4 @@ Route::post('/survey/{survey}/answer', [SurveyController::class, 'storeAnswer'])
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/sto', [ItemController::class, 'store2']);
+ROute::get('/topic', [TopicsController::class, 'index']);
