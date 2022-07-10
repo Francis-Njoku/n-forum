@@ -14,5 +14,7 @@ class TopicsCategory extends Model
 
     protected $fillable = ['category_id', 'topic_id'];
 
-    
+    public function topics() {
+        return $this->belongsTo(Topics::class);
+    }
 }
