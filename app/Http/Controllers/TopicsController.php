@@ -16,7 +16,9 @@ class TopicsController extends Controller
      */
     public function index()
     {
-        return TopicsResource::collection(Topics::join('users', 'users.id', '=', 'topics.user_id')->where('status', '1')->paginate(3));
+        return TopicsResource::collection(Topics::join('users', 'users.id', '=', 'topics.user_id')
+        ->join('profile', 'profile.user_id', '=', 'users.id')
+        ->where('topics.status', '1')->paginate(3));
     }
 
     /**
