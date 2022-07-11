@@ -21,7 +21,7 @@ class TopicsResource extends JsonResource
             'image_url' => $this->image ? URL::to($this->image) : null,
             'title' => $this->title,
             'slug' => $this->slug,
-
+            'profile_image' => $this->profile_image ? URL::to($this->profile_image) : null,
             'status' => $this->slug,
             'description' => $this->content,
             'created_at' => (new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
