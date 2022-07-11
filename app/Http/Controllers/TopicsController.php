@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Topics;
 use App\Http\Requests\StoreTopicsRequest;
 use App\Http\Requests\UpdateTopicsRequest;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\TopicCategoryResource;
 use App\Http\Resources\TopicsResource;
+use App\Models\Category;
 
 class TopicsController extends Controller
 {
@@ -41,6 +44,18 @@ class TopicsController extends Controller
     public function show(Topics $topics)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Topics  $topics
+     * @return \Illuminate\Http\Response
+     */
+    public function listCategory($topics)
+    {
+        return CategoryResource::collection(Category::join('topics_category as tc', 'tc.category_id', '=', 'categories.id')
+        ->where('tc.topic_id', $topics)->get());
     }
 
     /**
