@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,4 +43,6 @@ Route::post('/survey/{survey}/answer', [SurveyController::class, 'storeAnswer'])
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/sto', [ItemController::class, 'store2']);
-ROute::get('/topic', [TopicsController::class, 'index']);
+Route::get('/topic', [TopicsController::class, 'index']);
+Route::get('/topic/{id}/category', [TopicsController::class, 'listCategory']);
+Route::get('/categories', [CategoryController::class, 'index']);
