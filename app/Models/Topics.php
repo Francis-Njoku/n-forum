@@ -18,10 +18,6 @@ class Topics extends Model
         return SlugOptions::create()->generateSlugsFrom('title')->saveSlugsTo('slug');
     }
 
-    public function topicsCategory()
-    {
-        return $this->hasMany(TopicsCategory::class);
-    }
 
     public function topicComment()
     {
