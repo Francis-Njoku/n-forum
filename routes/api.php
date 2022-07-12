@@ -27,9 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/survey', SurveyController::class);
-
     Route::get('/dashboard', [DashboardController::class, 'index']);
 });
+
+Route::apiResource('/category', CategoryController::class);
 
 Route::get('/items', [ItemController::class, 'index']);
 Route::prefix('/item')->group(function () {
@@ -46,3 +47,5 @@ Route::post('/sto', [ItemController::class, 'store2']);
 Route::get('/topic', [TopicsController::class, 'index']);
 Route::get('/topic/{id}/category', [TopicsController::class, 'listCategory']);
 Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/trending', [TopicsController::class, 'topTrending']);
+
