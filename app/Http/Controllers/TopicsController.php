@@ -9,6 +9,7 @@ use App\Http\Resources\CategoryResource;
 use App\Http\Resources\TopicCategoryResource;
 use App\Http\Resources\TopicsResource;
 use App\Models\Category;
+use Carbon\Carbon;
 
 class TopicsController extends Controller
 {
@@ -56,6 +57,20 @@ class TopicsController extends Controller
     {
         return CategoryResource::collection(Category::join('topics_category as tc', 'tc.category_id', '=', 'categories.id')
         ->where('tc.topic_id', $topics)->get());
+    }
+
+    /**
+     * Display the Top trending topics resource.
+     *
+     * @param  \App\Models\Topics  $topics
+     * @return \Illuminate\Http\Response
+     */
+    public function topTrending()
+    {
+        $date = Carbon::now()->subDays(7);
+
+        return TopicsResource::collection(Topics::join('topic_comments as tc', 'tc.topic_id', '=', 'topics.id')
+        ->where('topics.status', 1)->where('topics.created_at', '>=', $date)->get());
     }
 
     /**
