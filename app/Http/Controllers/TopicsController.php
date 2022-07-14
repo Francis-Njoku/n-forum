@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateTopicsRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\TopicCategoryResource;
 use App\Http\Resources\TopicsResource;
+use App\Http\Resources\TopicTrendingResource;
 use App\Models\Category;
 use Carbon\Carbon;
 
@@ -21,8 +22,8 @@ class TopicsController extends Controller
     public function index()
     {
         return TopicsResource::collection(Topics::join('users', 'users.id', '=', 'topics.user_id')
-        ->join('profile', 'profile.user_id', '=', 'users.id')
-        ->where('topics.status', '1')->paginate(3));
+            ->join('profile', 'profile.user_id', '=', 'users.id')
+            ->where('topics.status', '1')->paginate(3));
     }
 
     /**
@@ -56,7 +57,7 @@ class TopicsController extends Controller
     public function listCategory($topics)
     {
         return CategoryResource::collection(Category::join('topics_category as tc', 'tc.category_id', '=', 'categories.id')
-        ->where('tc.topic_id', $topics)->get());
+            ->where('tc.topic_id', $topics)->get());
     }
 
     /**
@@ -69,8 +70,13 @@ class TopicsController extends Controller
     {
         $date = Carbon::now()->subDays(7);
 
-        return TopicsResource::collection(Topics::join('topic_comments as tc', 'tc.topic_id', '=', 'topics.id')
-        ->where('topics.status', 1)->where('topics.created_at', '>=', $date)->get());
+        return TopicTrendingResource::collection(Topics
+            ::join('topic_comments as tc', 'tc.topic_id', '=', 'topics.id')
+            ->selectRaw('count(tc.topic_id) as counter, topics.title as name, topics.slug as slug, topics.image as image, topics.created_at as created_at')
+            ->where('topics.status', 1)
+            ->where('topics.created_at', '>=', $date)
+            ->groupBy('topics.title', 'topics.slug', 'topics.image', 'topics.created_at')
+            ->get());
     }
 
     /**
