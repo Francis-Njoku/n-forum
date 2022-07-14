@@ -6,6 +6,9 @@ use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\CategoryTrendingResource;
+use App\Models\Topics;
+use Carbon\Carbon;
 
 class CategoryController extends Controller
 {
@@ -39,6 +42,43 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         return new CategoryResource($category);
+    }
+
+    /**
+     * Display the Top trending topics resource.
+     *
+     * @param  \App\Models\Topics  $topics
+     * @return \Illuminate\Http\Response
+     */
+    public function topTrending()
+    {
+        $date = Carbon::now()->subDays(7);
+
+        return CategoryTrendingResource::collection(Category
+            ::join('topics_category as tsc', 'tsc.category_id', '=', 'categories.id')
+            ->join('topics as ts', 'ts.id', '=', 'tsc.topic_id')
+            ->join('topic_comments as tc', 'tc.topic_id', '=', 'tsc.id')
+            ->selectRaw('count(tc.topic_id) as counter, categories.name as name, categories.slug as slug, categories.created_at as created_at')
+            ->where('categories.status', 1)
+            ->where('ts.created_at', '>=', $date)
+            ->groupBy('categories.name', 'categories.slug', 'categories.created_at')
+            ->get());
+    }
+
+    /**
+     * Display the Followed topics resource.
+     *
+     * @param  \App\Models\Category  $categories
+     * @return \Illuminate\Http\Response
+     */
+    public function followed()
+    {
+        #$date = Carbon::now()->subDays(7);
+
+        return CategoryResource::collection(Category
+            ::join('followed_category as fc', 'fc.category_id', '=', 'categories.id')
+            ->where('categories.status', 1)
+            ->get());
     }
 
     /**
