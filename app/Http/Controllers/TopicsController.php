@@ -80,6 +80,22 @@ class TopicsController extends Controller
     }
 
     /**
+     * Display the Followed topics resource.
+     *
+     * @param  \App\Models\Topics  $topics
+     * @return \Illuminate\Http\Response
+     */
+    public function followed()
+    {
+        #$date = Carbon::now()->subDays(7);
+
+        return TopicsResource::collection(Topics
+            ::join('followed_topics as ft', 'ft.topics_id', '=', 'topics.id')
+            ->where('topics.status', 1)
+            ->get());
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateTopicsRequest  $request
