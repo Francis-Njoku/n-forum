@@ -51,4 +51,3 @@ Route::get('/trending', [TopicsController::class, 'topTrending']);
 Route::get('/categories/trending', [CategoryController::class, 'topTrending']);
 Route::get('/followed/topics', [TopicsController::class, 'followed']);
 Route::get('/followed/categories', [CategoryController::class, 'followed']);
-
