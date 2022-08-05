@@ -34,6 +34,11 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password'])
         ]);
+        if (!$user) {
+            return response([
+                'error' => 'The Provided credentials are not correct'
+            ], 422);
+        }
         $token = $user->createToken('main')->plainTextToken;
 
         return response([
