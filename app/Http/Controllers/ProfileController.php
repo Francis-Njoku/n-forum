@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Resources\ProfileResource;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -13,9 +17,21 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        try {
+            //$user = User::find($request->user()->id);
+            //echo "CHima";
+            //$user = $request['users'];
+            //echo $user;
+            $user = $request->user();
+
+            return ProfileResource::collection(Profile::where('user_id', $user->id)->get());
+        } catch (\Exception $e) {
+            return  response([
+                'error' => $request->user()
+            ], 422);
+        }
     }
 
     /**

@@ -333,6 +333,7 @@ import Notification from "./Notification.vue";
 
 const navigation = [
   { name: "Dashboard", to: { name: "Dashboard" } },
+  { name: "Books", to: { name: "Books" } },
   { name: "Surveys", to: { name: "Surveys" } },
 ];
 
