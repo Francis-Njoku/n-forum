@@ -129,7 +129,7 @@ const store = createStore({
       state.books.data = data;
     },
     setCurrentBook: (state, book) => {
-      state.currentBook.data = book.data;
+      state.currentBook.data = book;
     },
     setCurrentBookLoading: (state, loading) => {
       state.currentBook.loading = loading;

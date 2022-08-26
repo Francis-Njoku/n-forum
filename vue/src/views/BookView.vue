@@ -7,8 +7,11 @@
           <!-- <img :src="survey.image_url" :alt="survey.title" />-->
         </div>
         <div class="col-span-5">
-          <h1 class="text-3xl mb-3">{{ book.url }}</h1>
-          <p class="text-gray-500 text-sm" v-html="data"></p>
+          <h1 class="text-3xl mb-3">Name of Book: {{ book.book.name }}</h1>
+          <p class="text-gray-500 text-sm" v-html="book.book.authors"></p>
+          <p class="text-gray-500 text-sm">
+            Number of pages: {{ book.book.numberOfPages }}
+          </p>
         </div>
       </div>
       <div

@@ -120,6 +120,8 @@ class BooksController extends Controller
             $comment = array("No comments", 400);
         }
 
+
+
         return [
             'book' => $book,
             'comment' => $comment
