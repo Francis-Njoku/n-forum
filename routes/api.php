@@ -28,35 +28,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
-    Route::get('/profile', [ProfileController::class, 'index']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::apiResource('/survey', SurveyController::class);
-    Route::get('/dashboard', [DashboardController::class, 'index']);
 });
 
 Route::apiResource('/category', CategoryController::class);
 
-Route::get('/items', [ItemController::class, 'index']);
-Route::prefix('/item')->group(function () {
-    Route::post('/store', [ItemController::class, 'store']);
-    Route::put('/{id}', [ItemController::class, 'update']);
-    Route::delete('/{id}', [ItemController::class, 'delete']);
-});
 
-Route::get('/survey-by-slug/{survey:slug}', [SurveyController::class, 'showForGuest']);
-Route::post('/survey/{survey}/answer', [SurveyController::class, 'storeAnswer']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/sign-up', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/sto', [ItemController::class, 'store2']);
-Route::get('/topic', [TopicsController::class, 'index']);
-Route::get('/topic/{id}/category', [TopicsController::class, 'listCategory']);
-Route::get('/categories', [CategoryController::class, 'index']);
-Route::get('/trending', [TopicsController::class, 'topTrending']);
-Route::get('/categories/trending', [CategoryController::class, 'topTrending']);
-Route::get('/followed/topics', [TopicsController::class, 'followed']);
-Route::get('/followed/categories', [CategoryController::class, 'followed']);
+
 
 Route::get('/characters', [CharactersController::class, 'index']);
 Route::get('/books', [BooksController::class, 'index']);
