@@ -7,7 +7,7 @@
           <!-- <img :src="survey.image_url" :alt="survey.title" />-->
         </div>
         <div class="col-span-5">
-          <h1 class="text-3xl mb-3">{{ data.url }}</h1>
+          <h1 class="text-3xl mb-3">{{ book.url }}</h1>
           <p class="text-gray-500 text-sm" v-html="data"></p>
         </div>
       </div>
@@ -53,7 +53,9 @@ const route = useRoute();
 const store = useStore();
 
 const loading = computed(() => store.state.currentBook.loading);
-const data = computed(() => store.state.currentBook.data);
+const book = computed(() => store.state.currentBook.data);
+
+console.log(book);
 
 const bookFinished = ref(false);
 
