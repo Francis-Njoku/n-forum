@@ -2,15 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ItemController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SurveryController;
-use App\Http\Controllers\SurveyController;
-use App\Http\Controllers\TopicsController;
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\CharactersController;
 
 /*
@@ -43,3 +38,4 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/characters', [CharactersController::class, 'index']);
 Route::get('/books', [BooksController::class, 'index']);
 Route::get('/book/{id}', [BooksController::class, 'show']);
+Route::post('/comment', [CommentsController::class, 'store']);

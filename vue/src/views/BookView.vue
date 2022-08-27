@@ -29,6 +29,12 @@
       </div>
       <div v-else>
         <hr class="my-3" />
+        <h3>Comments</h3>
+        <div v-for="(comments, ind) of book.comment" :key="comments.postid">
+          <p>{{ comments.comment }}</p>
+          <hr />
+          <br /><br />
+        </div>
         <!--<div v-for="(question, ind) of survey.questions" :key="question.id">
           <QuestionViewer
             v-model="answers[question.id]"

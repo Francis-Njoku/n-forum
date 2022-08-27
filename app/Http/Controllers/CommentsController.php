@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comments;
 use App\Http\Requests\StoreCommentsRequest;
 use App\Http\Requests\UpdateCommentsRequest;
+use App\Http\Resources\CommentResource;
 
 class CommentsController extends Controller
 {
@@ -26,7 +27,11 @@ class CommentsController extends Controller
      */
     public function store(StoreCommentsRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $comment = Comments::create($data);
+
+        return new CommentResource($comment);
     }
 
     /**
