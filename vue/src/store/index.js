@@ -92,7 +92,7 @@ const store = createStore({
           return res;
         });
       } else {
-        response = axiosClient.post("/comment", survey).then((res) => {
+        response = axiosClient.post("/comment", book).then((res) => {
           commit("setCurrentBook", res.data);
           return res;
         });
