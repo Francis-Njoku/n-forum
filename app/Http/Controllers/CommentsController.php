@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comments;
+use App\Models\Comment;
 use App\Http\Requests\StoreCommentsRequest;
 use App\Http\Requests\UpdateCommentsRequest;
 use App\Http\Resources\CommentResource;
@@ -27,9 +27,12 @@ class CommentsController extends Controller
      */
     public function store(StoreCommentsRequest $request)
     {
+        //dd($request->all());
         $data = $request->validated();
 
-        $comment = Comments::create($data);
+        $data['ip'] = \Request::ip();
+
+        $comment = Comment::create($data);
 
         return new CommentResource($comment);
     }
@@ -40,7 +43,7 @@ class CommentsController extends Controller
      * @param  \App\Models\Comments  $comments
      * @return \Illuminate\Http\Response
      */
-    public function show(Comments $comments)
+    public function show(Comment $comments)
     {
         //
     }
@@ -52,7 +55,7 @@ class CommentsController extends Controller
      * @param  \App\Models\Comments  $comments
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCommentsRequest $request, Comments $comments)
+    public function update(UpdateCommentsRequest $request, Comment $comments)
     {
         //
     }
@@ -63,7 +66,7 @@ class CommentsController extends Controller
      * @param  \App\Models\Comments  $comments
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comments $comments)
+    public function destroy(Comment $comments)
     {
         //
     }

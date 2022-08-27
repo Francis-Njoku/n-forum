@@ -13,7 +13,7 @@ class StoreCommentsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,8 +25,8 @@ class StoreCommentsRequest extends FormRequest
     {
         return [
             'comment' => 'required|string|max:500',
-            'postid' => 'required|string',
-            'status' => 'active',
+            'postid' => 'required',
+            'status' => 'required',
         ];
     }
 }

@@ -18,7 +18,8 @@ class CommentResource extends JsonResource
             'id' => $this->id,
             'postid' => $this->postid,
             'comment' => $this->comment,
-            'status' => !!$this->status,
+            'ip' => $this->ip,
+            'status' => $this->status,
             'created_at' => (new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
             'updated_at' => (new \DateTime($this->updated_at))->format('Y-m-d H:i:s')
 
