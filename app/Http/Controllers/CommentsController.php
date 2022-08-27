@@ -19,6 +19,30 @@ class CommentsController extends Controller
         //
     }
 
+    // Get book id
+    public function getId($param)
+    {
+        $lastItem = explode('/', $param);
+        return end($lastItem);
+    }
+
+    // find book id
+    public function checkPostID($postid)
+    {
+        $client = new \GuzzleHttp\Client();
+        $request = $client->get(env('EXTERNAL_API') . 'books');
+        $response = $request->getBody()->getContents();
+
+        // Decode JSON    
+        $er =  json_decode($response, true);
+
+        foreach ($er as $key => $csm) {
+            $er[$key]['id'] = self::getId($er[$key]['url']);
+        }
+
+        return array_search($postid, array_column($er, 'id'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -27,14 +51,22 @@ class CommentsController extends Controller
      */
     public function store(StoreCommentsRequest $request)
     {
-        //dd($request->all());
+
+
         $data = $request->validated();
 
-        $data['ip'] = \Request::ip();
+        // Check if book exist
+        if (self::checkPostID($data['postid'])) {
+            $data['ip'] = \Request::ip();
 
-        $comment = Comment::create($data);
+            $comment = Comment::create($data);
 
-        return new CommentResource($comment);
+            return new CommentResource($comment);
+        } else {
+            return response([
+                'error' => 'The book id does not exist'
+            ], 422);
+        }
     }
 
     /**
