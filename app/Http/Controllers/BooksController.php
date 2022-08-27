@@ -112,6 +112,7 @@ class BooksController extends Controller
             ->get();
 
         $getcomment = json_decode($getcomm, true);
+        $book['id'] = $id;
 
 
         if ($getcomment) {

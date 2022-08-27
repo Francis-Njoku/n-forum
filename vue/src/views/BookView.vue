@@ -1,7 +1,7 @@
 <template>
   <div class="py-5 px-8">
     <div v-if="loading" class="flex justify-center">Loading...</div>
-    <form @submit.prevent="submitSurvey" v-else class="container mx-auto">
+    <form @submit.prevent="submitBook" v-else class="container mx-auto">
       <div class="grid grid-cols-6 items-center">
         <div class="mr-4">
           <!-- <img :src="survey.image_url" :alt="survey.title" />-->
@@ -42,6 +42,22 @@
             :index="ind"
           />
         </div>-->
+        <input type="hidden" name="postid" value="{{ book.book.id }}" />
+        <input type="hidden" name="status" value="active" />
+
+        <label
+          for="comment"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+          >Add Comment</label
+        >
+        <textarea
+          id="comment"
+          name="comment"
+          rows="4"
+          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Leave a comment..."
+        ></textarea>
+
         <button
           type="submit"
           class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -54,6 +70,7 @@
 </template>
 
 <script setup>
+//import { comment } from "postcss";
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -75,8 +92,9 @@ store.dispatch("getBook", route.params.id);
 function submitBook() {
   console.log(JSON.stringify(answers.value, undefined, 2));
   store
-    .dispatch("saveBook", {
+    .dispatch("saveComment", {
       bookId: book.value.id,
+      postid: book.value.id,
       answers: answers.value,
     })
     .then((response) => {
