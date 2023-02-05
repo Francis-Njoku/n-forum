@@ -14,12 +14,10 @@ const routes = [
     name: "Books",
     component: DefaultLayout,
     meta: { requiresAuth: true },
-    children: [{ path: "/books", name: "Books", component: Books }],
-  },
-  {
-    path: "/book/:id",
-    name: "BookView",
-    component: BookView,
+    children: [
+      { path: "/books", name: "Books", component: Books },
+      { path: "/book/:id", name: "BookView", component: BookView },
+    ],
   },
   {
     path: "/auth",
