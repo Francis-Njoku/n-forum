@@ -15,9 +15,11 @@
     "uuid": "^8.3.2",
     "vue": "^3.2.25",
     "vue-router": "^4.0.13",
+    "vuelidate": "^0.7.7",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/vuelidate": "^0.7.15",
     "@vitejs/plugin-vue": "^2.3.3",
     "autoprefixer": "^10.4.7",
     "postcss": "^8.4.14",

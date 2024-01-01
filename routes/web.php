@@ -1,5 +1,8 @@
 <?php
 
+
+use App\Http\Controllers\BooksController;
+use App\Http\Controllers\CharactersController;
 use App\Http\Controllers\TopicsController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/books', [BooksController::class, 'getBooks']);
+
+Route::get('/handle', [BooksController::class, 'handle']);
+
+Route::get('/characters', [CharactersController::class, 'index']);
+
 
 Route::get('/topic/{id}/category', [TopicsController::class, 'listCategory']);
-

@@ -331,10 +331,7 @@ import { computed } from "vue";
 import { useRouter } from "vue-router";
 import Notification from "./Notification.vue";
 
-const navigation = [
-  { name: "Dashboard", to: { name: "Dashboard" } },
-  { name: "Surveys", to: { name: "Surveys" } },
-];
+const navigation = [{ name: "Books", to: { name: "Books" } }];
 
 const userNavigation = [
   { name: "Your Profile", href: "#" },
