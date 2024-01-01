@@ -26,6 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::get('/profile', [ProfileController::class, 'index']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/survey', SurveyController::class);
     Route::get('/dashboard', [DashboardController::class, 'index']);
@@ -53,4 +55,3 @@ Route::get('/trending', [TopicsController::class, 'topTrending']);
 Route::get('/categories/trending', [CategoryController::class, 'topTrending']);
 Route::get('/followed/topics', [TopicsController::class, 'followed']);
 Route::get('/followed/categories', [CategoryController::class, 'followed']);
-Route::get('/profile', [ProfileController::class, 'index']);
